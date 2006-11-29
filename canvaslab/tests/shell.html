@@ -1,0 +1,380 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  	<title>Canvas Shell</title>
+  	<!-- A QUICK AND DIRTY SHELL FOR EXPERIMENTING WITH CANVAS -->
+  	<script src="../vendor/prototype.js" type="text/javascript" charset="utf-8"></script>
+  	<script src="../lib/color.js" type="text/javascript" charset="utf-8"></script>
+  	<script src="../vendor/base.js" type="text/javascript" charset="utf-8"></script>
+  	<script src="../dist/canvaslab.js" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/javascript" language="javascript" charset="utf-8">
+    
+     function log(msg) {
+        $('debug').value += msg;
+      }
+      
+      function __init() {
+        canvas = $('mycanvas')
+        context = canvas.getContext('2d');
+        makeGrid();
+        Color = ToolKit.Color.Color;
+        
+      }
+    
+      function makeGrid() {
+        var grid = $('grid');
+        var width = parseInt(grid.getStyle('width'));
+        var height = parseInt(grid.getStyle('height'));
+        
+        [width, height].each(function(prop, index) {
+          var top = index == 0 ? true : false;
+          (prop/10).times(function(num) {
+            var div = document.createElement('div');
+            div.addClassName('tick-' + (top ? 'top' : 'left'));
+            if(top) div.setStyle({left: 10 * num + 'px'});
+            if(!top) div.setStyle({top: 10 * num + 'px'});
+            var glyph = top ? '|' : '&mdash;'
+            if(!(num % 2)) div.innerHTML = 10 * num + ' <span>' + glyph + '</span>';
+            grid.appendChild(div);
+          });
+        });
+        
+        var xLabel = document.createElement('div');
+        xLabel.innerHTML = 'X';
+        xLabel.addClassName('xlbl');
+        grid.appendChild(xLabel);
+        
+        var yLabel = document.createElement('div');
+        yLabel.innerHTML = 'Y';
+        yLabel.addClassName('ylbl');
+        grid.appendChild(yLabel);
+        
+        var coords = document.createElement('div');
+        coords.setStyle({width: '50px', position: 'absolute'});
+        coords.addClassName('coords');
+        grid.appendChild(coords);
+        
+        Event.observe(canvas, 'mousemove', function(e) {
+          var x = (Event.pointerX(e) - 35);
+          var y = (Event.pointerY(e) - 54);
+          coords.innerHTML =  'x: ' + x + '<br /> y: ' + y;
+        });
+      }
+      
+      function make() {
+        try {
+          eval($F('shell'));
+        } catch(e) {
+          log(e.toString());
+        }
+      }
+
+    
+    
+      function drawCanvas() {
+        
+        var canvas = $('mycanvas');
+        var context = canvas.getContext('2d');
+        
+        context.lineWidth = 4;
+        
+        context.save();
+        context.translate(0, -10);
+        var amount = Math.max((canvas.width / 6));
+        context.strokeStyle = Color.fromHexString('#eee').toRGBString();
+        amount.times(function(i) {
+          context.beginPath();
+          context.moveTo(20 * i, 0);
+          context.lineTo(0, 20 * i);          
+          context.stroke();
+        });
+        
+      }
+      
+      
+      function draw() {
+        var ctx = document.getElementById('mycanvas').getContext('2d');
+        ctx.translate(75,75);
+
+        for (i=1;i<6;i++){ // Loop through rings (from inside to out)
+          ctx.save();
+          ctx.fillStyle = 'rgb('+(51*i)+','+(255-51*i)+',255)';
+
+          for (j=0;j<i*6;j++){ // draw individual dots
+            ctx.rotate(Math.PI*2/(i*6));
+            ctx.beginPath();
+            ctx.arc(0,i*12.5,5,0,Math.PI*2,true);
+            ctx.fill();
+          }
+
+          ctx.restore();
+        }
+      }
+      
+      Object.extend(Math, {
+        toRadians: function(degrees) {
+         var rad = parseInt(degrees) * (Math.PI/180);
+         log('RAD: ' + rad + "\n");
+         return rad;
+        },
+        
+        reflectAxis: function(x, y, degrees) {
+          var newX = (Math.cos(Math.toRadians(degrees)) * x) - (Math.sin(Math.toRadians(degrees)) * y); 
+          var newY = (Math.sin(Math.toRadians(degrees)) * x) - (Math.cos(Math.toRadians(degrees)) * y);
+          return [Math.round(newX), Math.round(newY)]; 
+        }
+      });
+
+
+      
+    </script>
+    
+    <style type="text/css" media="screen">
+    /* <![CDATA[ */
+    body {
+      font: 1em/1.4em "Lucida Grande", Helvetica, Helvetica, sans-serif;
+    }
+    
+    #main {
+      margin-left: 20px;
+      font-size: 80%;
+    }
+    
+    #content {
+      float: left;
+      width: 500px;
+      background: #999;
+    }
+    
+      #mycanvas {
+        border: 1px dotted #000;
+      }
+      
+      #grid {
+        background: #f7f7f7 url('data:image/gif;base64,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') 50% 50% no-repeat;
+        width: 500px;
+        height: 500px;
+        position: relative;
+        padding: 5px;
+      }
+      
+      h1 {
+        font-size: 20px;
+      }
+      
+      #inspect {
+        margin: 10px 0;
+        padding: 5px;
+      }
+      
+      #inspect textarea, #shell {
+        width: 100%;
+      }
+      
+      #inspect h3 {
+        text-align: center;
+        color: #333;
+        font-size: 14px;
+        padding: 0;
+        margin: 0;
+      }
+      
+      .tick-top, .tick-left {
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        top: -15px;
+        font-size: 8px;
+        line-height: 100%;
+        text-align: center;
+      }
+      
+      .tick-left {
+        left: -25px;
+        width: 40px;
+        vertical-align: middle;
+      }
+      
+      .tick-left span {
+        
+      }
+      
+      .tick-top span {
+        display: block;
+      }
+      
+      .xlbl, .ylbl {
+        width: 10px;
+        height: 10px;
+        position: absolute;
+      }
+      
+      .xlbl {
+        left: 10px;
+        top: 250px;
+      }
+      
+      .ylbl {
+        left: 260px;
+        top: 490px;
+      }
+      
+      .coords {
+        font-size: 9px;
+        background: #ffe;
+      }
+      
+      #sbar {
+        margin-left: 540px;
+        padding: 1px;
+      }
+      
+      textarea {
+        font-family: Monaco, Courier, "Corier New", fixed;
+        font-size: 85%;
+      }
+    /* ]]> */
+    </style>
+    
+  </head>
+  <body onload="__init()">
+    <!-- begin div.header -->
+    <div id="header">
+      
+    </div>
+    <!-- /end div.header -->
+    
+    <!-- begin div.nav -->
+    <div id="nav"></div>
+    <!-- /end div.nav -->
+    
+    
+    <!-- begin div.main -->
+    <div id="main">
+      <h1>Canvas Shell</h1>
+      <div id="content">
+        <div id="grid"><canvas id="mycanvas" width="500" height="500"> </canvas></div>
+      </div>
+      
+      <div id="sbar">
+        <textarea rows="25" cols="55" id="shell">
+context.clearRect(0,0,500,500);
+context.globalAlpha = '0.5';
+context.beginPath();
+origin = new Object();
+origin.x = 150;
+origin.y = 150;
+
+focalLength = 50;
+MakeA3DPoint = function(x,y,z){
+	var point = new Object();
+	point.x = x;
+	point.y = y;
+	point.z = z;
+	return point;
+};
+
+ConvertPointIn3DToPointIn2D = function(pointIn3D){
+	var pointIn2D = new Object();
+	var scaleRatio = focalLength/(focalLength + pointIn3D.z);
+	pointIn2D.x = pointIn3D.x * scaleRatio;
+	pointIn2D.y = pointIn3D.y * scaleRatio;
+	return pointIn2D;
+};
+
+pointsArray = [
+	MakeA3DPoint(-20, -40, -20),
+	MakeA3DPoint(20, -40, -20),
+	MakeA3DPoint(20, -40, 20),
+	MakeA3DPoint(-20, -40, 20),
+	MakeA3DPoint(-20, 80, -20),
+	MakeA3DPoint(20, 80, -20),
+	MakeA3DPoint(20, 80, 20),
+	MakeA3DPoint(-20, 80, 20)
+];
+
+direction = "left";
+speed = 5;
+
+backAndForthAndSideToSide = function(){
+context.clearRect(0,0,500,500);
+	var screenPoints = new Array();
+	for (var i=0; i < pointsArray.length; i++){
+		var thisPoint = pointsArray[i];		
+		if (direction == "left"){
+			thisPoint.x -= speed;
+			if (i == pointsArray.length-1 && thisPoint.x <= -100) direction = "backward";
+		}else if (direction == "backward"){
+			thisPoint.z += speed;
+			if (i == pointsArray.length-1 && thisPoint.z >= 150) direction = "right";
+		}else if (direction == "right"){
+			thisPoint.x += speed;
+			if (i == pointsArray.length-1 && thisPoint.x >= 60) direction = "forward";
+		}else if (direction == "forward"){
+			thisPoint.z -= speed;
+			if (i == pointsArray.length-1 && thisPoint.z <= 0) direction = "left";
+		}
+		screenPoints[i] = ConvertPointIn3DToPointIn2D(thisPoint);
+		screenPoints[i].x += origin.x;
+		screenPoints[i].y += origin.y;
+	}
+
+
+context.moveTo(screenPoints[0].x, screenPoints[0].y);
+context.lineTo(screenPoints[1].x, screenPoints[1].y);
+context.lineTo(screenPoints[2].x, screenPoints[2].y);
+context.lineTo(screenPoints[3].x, screenPoints[3].y);
+context.lineTo(screenPoints[0].x, screenPoints[0].y);
+
+
+
+context.moveTo(screenPoints[4].x, screenPoints[4].y);
+context.lineTo(screenPoints[5].x, screenPoints[5].y);
+context.lineTo(screenPoints[6].x, screenPoints[6].y);
+context.lineTo(screenPoints[7].x, screenPoints[7].y);
+context.lineTo(screenPoints[4].x, screenPoints[4].y);
+
+
+context.moveTo(screenPoints[0].x, screenPoints[0].y);
+context.lineTo(screenPoints[4].x, screenPoints[4].y);
+
+
+context.moveTo(screenPoints[1].x, screenPoints[1].y);
+context.lineTo(screenPoints[5].x, screenPoints[5].y);
+
+
+context.moveTo(screenPoints[2].x, screenPoints[2].y);
+context.lineTo(screenPoints[6].x, screenPoints[6].y);
+
+
+context.moveTo(screenPoints[3].x, screenPoints[3].y);
+context.lineTo(screenPoints[7].x, screenPoints[7].y);
+context.stroke();
+};
+
+setInterval("backAndForthAndSideToSide()", 30);
+
+        </textarea><br />
+        <input type="submit" value="Draw This" onclick="$('debug').value = ''; make();" />
+        <div id="inspect">
+          <h3>Debug</h3>
+          <p>Use <code>log(<em>msg</em>)</code> from shell</p>
+          <textarea name="debug" id="debug" rows="10" cols="40"> 
+            
+          </textarea>
+          <p><input type="submit" value="Clear" onclick="$('debug').value = '';"></p>
+        </div>
+      </div>
+      
+    </div>
+    <!-- /end div.main -->
+    
+    <!-- begin div.footer -->
+    <div id="footer"></div>
+    <!-- /end div.footer -->
+
+  </body>
+</html>

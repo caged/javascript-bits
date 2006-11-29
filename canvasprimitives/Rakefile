@@ -1,0 +1,9 @@
+require 'fileutils'
+
+desc "Update Prototype to Subversion HEAD"
+task :update_prototype do
+  FileUtils.rm 'vendor/prototype.js' if File.exists? 'vendor/prototype.js'
+  puts '--> Exporting Prototype to vendor/prototype.js'
+  `svn export http://dev.rubyonrails.org/svn/rails/trunk/railties/html/javascripts/prototype.js vendor/prototype.js`
+  puts '--> DONE'
+end

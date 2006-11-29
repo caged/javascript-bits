@@ -1,0 +1,24 @@
+# CanvasLab 
+## Canvas and charting library for the Prototype Javascript library.
+
+### Supported Browsers
+* Firefox 1.5
+* Safari 2.0.3
+* Internet Explorer 6 (with excanvas.js)
+* Webkit (Nightly Builds)
+
+Internet Explorer requires [excanvas.js](http://svn.sourceforge.net/viewcvs.cgi/*checkout*/excanvas/excanvas.js).  
+This file must be included *before* CanvasLab.
+
+
+### Credits
+
+CanvasLab owes a lot of credit to Alastair Tse and his [plotKit library](http://www.liquidx.net/plotkit/).
+A lot of the algorithms found in CanvasLab were derived from the work Alastair did on plotKit.
+
+CanvasLab also uses a few derivatives of other open source tools.  Thanks to these fine chaps for making 
+them.
+
+* [Base](http://dean.edwards.name/base/Base.js) (*Dean Edwards*)
+* [DomBuilder](http://www.vivabit.com/bollocks/2006/04/06/introducing-dom-builder) (*Dan Webb*)
+* [Color and Format](http://mochikit.com/doc/html/MochiKit/Color.html) (*Bob Ippolito's Mochikit*)

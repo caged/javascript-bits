@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  	<title>CanvasLab</title>
+  	<!--[if IE]><script type="text/javascript" src="../vendor/excanvas.js"></script><![endif]-->
+  	<script src="../vendor/prototype.js" type="text/javascript" charset="utf-8"></script>
+  	<script src="../vendor/base.js" type="text/javascript" charset="utf-8"></script>
+  	<script src="../dist/canvaslab.js" type="text/javascript" charset="utf-8"></script>
+  	<script src="../lib/colorwheel.js" type="text/javascript" charset="utf-8"></script>
+  	<style type="text/css" media="screen">
+  	/* <![CDATA[ */
+  	 #color li, div.c {
+  	   float: left;
+  	 }
+  	 
+  	 div.p {
+  	   margin: 10px;
+  	 }
+  	/* ]]> */
+  	</style>
+  	
+  </head>
+  <body>
+   <h1>CanvasLab Tests</h1>
+   <div class="p"><canvas id="sidebar" width="700" height="350"></canvas></div>
+   <div class="p"><canvas id="line" width="400" height="250"></canvas></div>
+   <div class="p"><canvas id="bar" width="400" height="250"></canvas></div>
+   <div class="p"><canvas id="area" width="400" height="250"></canvas></div>
+   <div class="p"><canvas id="pie" width="400" height="250"></canvas></div>
+   <div class="p"><canvas id="changesets" width="400" height="250"></canvas></div>
+   
+   <ul id="color" style="list-style:none"></ul>
+   
+   <script type="text/javascript" language="javascript" charset="utf-8">
+/*   var i = 0;
+   $H(ToolKit.Color.namedColors()).each(function(color) {
+    var id = 'canvas_' + new Date().getTime();
+    new Insertion.Bottom(document.body, '<div class="p"><canvas id="' + id + '" width="400" height="200">No canvas support</canvas></div>');
+    var bar = new CanvasLab.Bar(id, { 
+      theme:{
+        colorScheme: new ToolKit.ColorPalette(ToolKit.Color.fromName(color.key), {increment: 0.05, fromLevel: -0.3})
+      } 
+    });        
+    bar.addDataset('Hats', [0, 4], [1, 7], [2, 1], [3, 4], [4, 5]);
+    bar.addDataset('Shirts', [0, 23], [1, 23], [2, 3], [3, 6], [4, 9]);
+    bar.addDataset('Shoes', [0, 14], [1, 4], [2, 20], [3, 9], [4, 2]);
+    bar.addDataset('Gloves', [0, 5], [1, 5], [2, 23], [3, 12], [4, 26]);
+    bar.addDataset('Jeans', [0, 10], [1, 7], [2, 18], [3, 11], [4, 22]);
+    bar.setXLabels({'Monday': 0, 'Tuesday': 1, 'Wenesday': 2, 'Thursday': 3, 'Friday': 4});
+    bar.draw();
+    i++;
+    
+   });*/
+   
+   var sidebar = new CanvasLab.Bar('sidebar', 
+    {
+      horizontal: true, 
+      theme: { 
+        drawXTicks: true,
+        padding: {left: 70, right: 30, top: 25, bottom: 20}
+       }
+      });
+              
+   sidebar.addDataset('Hats', [0, 4], [1, 7], [2, 1], [3, 4], [4, 5]);
+   sidebar.addDataset('Shirts', [0, 23], [1, 23], [2, 3], [3, 6], [4, 9]);
+   sidebar.addDataset('Gloves', [0, 5], [1, 5], [2, 23], [3, 12], [4, 26]);
+   sidebar.setXLabels({'Monday': 0, 'Tuesday': 1, 'Wenesday': 2, 'Thursday': 3, 'Friday': 4});
+   sidebar.draw();
+   
+   var line = new CanvasLab.Line('line');        
+   line.addDataset('Hats', [0, 4], [1, 24], [2, 1], [3, 4], [4, 5]);
+   line.addDataset('Shirts', [0, 13], [1, 13], [2, 3], [3, 6], [4, 9]);
+   line.addDataset('Shoes', [0, 14], [1, 4], [2, 10], [3, 9], [4, 2]);
+   line.setXLabels({'Monday': 0, 'Tuesday': 1, 'Wenesday': 2, 'Thursday': 3, 'Friday': 4});
+   line.draw();
+   
+   
+   var bar = new CanvasLab.Bar('bar');        
+   bar.addDataset('Hats', [0, 4], [1, 7], [2, 1], [3, 4], [4, 5]);
+   bar.addDataset('Shirts', [0, 23], [1, 23], [2, 3], [3, 6], [4, 9]);
+   bar.addDataset('Shoes', [0, 14], [1, 4], [2, 20], [3, 9], [4, 2]);
+   bar.addDataset('Gloves', [0, 5], [1, 5], [2, 23], [3, 12], [4, 26]);
+   bar.setXLabels({'Monday': 0, 'Tuesday': 1, 'Wenesday': 2, 'Thursday': 3, 'Friday': 4});
+   bar.draw();
+   
+   var pie = new CanvasLab.Pie('pie');
+   pie.addDataset('Browsers', [0, 22], [1, 60], [2, 14], [3, 10], [4, 10]);
+   pie.setXLabels({'Safari': 0, 'Firefox': 1, 'IE': 2, 'Camino': 3, 'Webkit': 4});
+   pie.draw();
+   
+   var area = new CanvasLab.Area('area');        
+   area.addDataset('Hats', [0, 4], [1, 24], [2, 1], [3, 4], [4, 5]);
+   area.addDataset('Shirts', [0, 13], [1, 13], [2, 3], [3, 6], [4, 9]);
+   area.addDataset('Shoes', [0, 14], [1, 4], [2, 10], [3, 9], [4, 2]);
+   area.setXLabels({'Monday': 0, 'Tuesday': 1, 'Wenesday': 2, 'Thursday': 3, 'Friday': 4});
+   area.draw();
+   
+   
+     var changesets = new CanvasLab.Bar('changesets');
+     changesets.addDataset('Shoes', [0, 3], [1, 4], [2, 9]);
+     changesets.draw();
+/*   new Insertion.Bottom(document.body, '<a href="' + area.context.canvas.toDataURL() + '">Click me</a>');
+*/
+  
+   </script>
+  </body>
+</html>

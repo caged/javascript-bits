@@ -1,0 +1,21 @@
+[C] = Complete
+[I] = In Progress
+
+* Allow single value datasets.  
+  This should be a matter of checking if an array is 
+  given and if not generate the first point.
+* Theme doesn't use enough colors if there are numerous data sets
+* Rip out some of the unwanted bloat from ToolKit.Color
+* Unit Tests
+* Code Optimization (Speed, Speed, Speed)
+* [C] Horizontal Bar
+* Stacked Bar
+* Re-implement DOM Builder using Base  
+* Implement Legends (Export datasets to html list?)
+* Remove ToolKit Namespace?
+* Image's as Backgrounds (Tile/Static)
+
+
+RESEARCH/MAYBE
+  * Event Plugin? (Signals and Slots?)
+  * 3D Charts (non-core feature...perhaps a pluggable 3D API)

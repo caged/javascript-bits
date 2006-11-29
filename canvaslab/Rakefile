@@ -1,0 +1,40 @@
+require 'rake'
+require 'rake/packagetask'
+
+CANVASLAB_ROOT     = File.expand_path(File.dirname(__FILE__))
+CANVASLAB_SRC_DIR  = File.join(CANVASLAB_ROOT, 'src')
+CANVASLAB_DIST_DIR = File.join(CANVASLAB_ROOT, 'dist')
+CANVASLAB_PKG_DIR  = File.join(CANVASLAB_ROOT, 'pkg')
+CANVASLAB_VERSION  = '0.1.0'
+
+desc "Update Prototype to latest"
+task :update_prototype do
+  rm 'vendor/prototype.js' if File.exists?('vendor/prototype.js') 
+  `svn export http://dev.rubyonrails.org/svn/rails/trunk/railties/html/javascripts/prototype.js vendor/prototype.js`
+  puts '-> Prototype updated sucessfully'
+end
+
+
+desc "Combine all the files for distribution"
+task :dist do
+  $:.unshift File.join(CANVASLAB_ROOT, 'lib')
+  require 'protodoc'
+  
+  Dir.chdir(CANVASLAB_SRC_DIR) do
+    File.open(File.join(CANVASLAB_DIST_DIR, 'canvaslab.js'), 'w+') do |dist|
+      dist << Protodoc::Preprocessor.new('canvaslab.js')
+    end
+  end
+end
+
+Rake::PackageTask.new('canvaslab', CANVASLAB_VERSION) do |package|
+  package.need_tar_gz = true
+  package.package_dir = CANVASLAB_PKG_DIR
+  package.package_files.include(
+    '[A-Z]*',
+    'dist/canvaslab.js',
+    'lib/**',
+    'src/**',
+    'test/**'
+  )
+end
