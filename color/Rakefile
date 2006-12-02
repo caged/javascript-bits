@@ -1,0 +1,40 @@
+require 'rake'
+require 'rake/packagetask'
+
+COLOR_ROOT     = File.expand_path(File.dirname(__FILE__))
+COLOR_SRC_DIR  = File.join(COLOR_ROOT, 'src')
+COLOR_DIST_DIR = File.join(COLOR_ROOT, 'dist')
+COLOR_PKG_DIR  = File.join(COLOR_ROOT, 'pkg')
+COLOR_VERSION  = '0.1.0'
+
+desc "Update Prototype to latest"
+task :update_prototype do
+  rm 'vendor/prototype.js' if File.exists?('vendor/prototype.js') 
+  `svn export http://dev.rubyonrails.org/svn/rails/trunk/railties/html/javascripts/prototype.js vendor/prototype.js`
+  puts '-> Prototype updated sucessfully'
+end
+
+
+desc "Combine all the files for distribution"
+task :dist do
+  $:.unshift File.join(COLOR_ROOT, 'lib')
+  require 'protodoc'
+  
+  Dir.chdir(COLOR_SRC_DIR) do
+    File.open(File.join(COLOR_DIST_DIR, 'color.js'), 'w+') do |dist|
+      dist << Protodoc::Preprocessor.new('color.js')
+    end
+  end
+end
+
+Rake::PackageTask.new('color', COLOR_VERSION) do |package|
+  package.need_tar_gz = true
+  package.package_dir = COLOR_PKG_DIR
+  package.package_files.include(
+    '[A-Z]*',
+    'dist/color.js',
+    'lib/**',
+    'src/**',
+    'test/**'
+  )
+end
