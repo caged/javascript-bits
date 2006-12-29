@@ -81,7 +81,7 @@ CanvasLab.Bar = CanvasLab.Base.extend({
           xval: parseFloat(points[0]),
           yval: parseFloat(points[1]),
           name: dataset.name 
-        }
+        };
         this.bars.push(rect);
       }.bind(this));
     }.bind(this));

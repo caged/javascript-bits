@@ -26,14 +26,14 @@ ToolKit.Format = {
   degreesToRadians: function(degrees) {
     return degrees * (Math.PI/180);
   }
-}
+};
 
 ToolKit.Color = Base.extend({
   constructor: function(red, green, blue, alpha) {
     if (alpha == undefined  || alpha == null) {
         alpha = 1.0;
     }
-    this.rgb = { r: red, g: green, b: blue, a: alpha }
+    this.rgb = { r: red, g: green, b: blue, a: alpha };
   },
   
   colorWithAlpha: function (alpha) {
@@ -243,7 +243,7 @@ ToolKit.Color = Base.extend({
       red = rgb.r;
       green = rgb.g;
       blue = rgb.b;
-      alpha = rgb.a == undefined ? undefined : rgb.a
+      alpha = rgb.a == undefined ? undefined : rgb.a;
     }
     return new this(red, green, blue, alpha);
   },
@@ -788,7 +788,7 @@ ToolKit.DomBuilder = {
 	      if(typeof a[0] == 'number') a[0] = a[0].toString();
 	      if (a[0].nodeName || typeof a[0] == "string") ch = a; else { at = a[0]; ch = a.slice(1); } }
 	      return ToolKit.DomBuilder.elem(tag, at, ch);
-	  }
+	  };
   },
 	elem : function(e, a, c) {
 		a = a || {}; c = c || [];
@@ -800,7 +800,7 @@ ToolKit.DomBuilder = {
 		} 
 		return el;
 	}
-}
+};
 
 Object.clone = function(obj) {
   var me = arguments.callee;
@@ -808,7 +808,7 @@ Object.clone = function(obj) {
     me.prototype = obj;
     return new me();
   }
-}
+};
 
 Object.extend(Array.prototype, {
   uniq: function() {

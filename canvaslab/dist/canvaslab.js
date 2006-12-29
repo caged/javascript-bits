@@ -41,13 +41,17 @@ CanvasLab.Base = Base.extend({
        y: this.theme.padding.top,
        width: this.canvas.width - this.theme.padding.left - this.theme.padding.right,
        height: this.canvas.height - this.theme.padding.top - this.theme.padding.bottom
-   }
+   };
 
-   Element.setStyle(this.container, {
-     position: 'relative',
-     width: this.canvas.width + 'px'
-   });
-  },
+    var border = $w('left right').collect(function(prop) {
+      return parseInt(this.canvas.getStyle('border-' + prop + '-width'));
+    }.bind(this));
+
+    Element.setStyle(this.container, {
+      position: 'relative',
+      width: this.canvas.width + border[0] + border[1] + 'px';
+    });
+   },
 
   draw: function() {
     throw 'Must be implemented in a subclass';
@@ -548,7 +552,7 @@ CanvasLab.Bar = CanvasLab.Base.extend({
           xval: parseFloat(points[0]),
           yval: parseFloat(points[1]),
           name: dataset.name
-        }
+        };
         this.bars.push(rect);
       }.bind(this));
     }.bind(this));
@@ -646,7 +650,7 @@ CanvasLab.Pie = CanvasLab.Base.extend({
         yval: points[1],
         startAngle: currentAngle * Math.PI * 2,
         endAngle: (currentAngle + fraction) * Math.PI * 2
-      }
+      };
       this.slices.push(slice);
       currentAngle += fraction;
     }.bind(this));
@@ -680,7 +684,7 @@ CanvasLab.Pie = CanvasLab.Base.extend({
       centerX: this.area.x + this.area.width * 0.5,
       centerY: this.area.y + this.area.height * 0.5,
       radius: Math.min(this.area.width * this.options.radius, this.area.height * this.options.radius)
-    }
+    };
   },
 
   _generateLookUpTable: function() {
@@ -703,12 +707,12 @@ CanvasLab.Pie = CanvasLab.Base.extend({
     this.stage.xTicks.each(function(xtick) {
       var slice = lookup[xtick[0]];
 
-      if(slice == undefined || slice == null) throw $continue
+      if(slice == undefined || slice == null) throw $continue;
 
       var angle = (slice.startAngle + slice.endAngle) / 2;
       var normalizedAngle = angle;
       if(angle > Math.PI * 2)
-        normalizedAngle = angle - PI * 2
+        normalizedAngle = angle - PI * 2;
       else if(angle < 0)
         normalizedAngle = angle + PI * 2;
 
@@ -722,7 +726,7 @@ CanvasLab.Pie = CanvasLab.Base.extend({
         fontSize: this.theme.fontSize + 'px',
         overflow: 'hidden',
         color: this.theme.fontColor
-      }
+      };
 
       if(normalizedAngle <= PI * 0.5) {
        labelStyle = Object.extend(labelStyle, {
@@ -874,14 +878,14 @@ ToolKit.Format = {
   degreesToRadians: function(degrees) {
     return degrees * (Math.PI/180);
   }
-}
+};
 
 ToolKit.Color = Base.extend({
   constructor: function(red, green, blue, alpha) {
     if (alpha == undefined  || alpha == null) {
         alpha = 1.0;
     }
-    this.rgb = { r: red, g: green, b: blue, a: alpha }
+    this.rgb = { r: red, g: green, b: blue, a: alpha };
   },
 
   colorWithAlpha: function (alpha) {
@@ -1091,7 +1095,7 @@ ToolKit.Color = Base.extend({
       red = rgb.r;
       green = rgb.g;
       blue = rgb.b;
-      alpha = rgb.a == undefined ? undefined : rgb.a
+      alpha = rgb.a == undefined ? undefined : rgb.a;
     }
     return new this(red, green, blue, alpha);
   },
@@ -1636,7 +1640,7 @@ ToolKit.DomBuilder = {
 	      if(typeof a[0] == 'number') a[0] = a[0].toString();
 	      if (a[0].nodeName || typeof a[0] == "string") ch = a; else { at = a[0]; ch = a.slice(1); } }
 	      return ToolKit.DomBuilder.elem(tag, at, ch);
-	  }
+	  };
   },
 	elem : function(e, a, c) {
 		a = a || {}; c = c || [];
@@ -1648,7 +1652,7 @@ ToolKit.DomBuilder = {
 		}
 		return el;
 	}
-}
+};
 
 Object.clone = function(obj) {
   var me = arguments.callee;
@@ -1656,7 +1660,7 @@ Object.clone = function(obj) {
     me.prototype = obj;
     return new me();
   }
-}
+};
 
 Object.extend(Array.prototype, {
   uniq: function() {
@@ -1715,6 +1719,6 @@ CanvasLab.Theme = Base.extend({
       drawYAxis: true,
       drawShadow: false,
       shadowBlur: 0.2
-    }
+    };
   }
 });

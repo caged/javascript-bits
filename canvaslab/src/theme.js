@@ -39,7 +39,7 @@ CanvasLab.Theme = Base.extend({
       drawYAxis: true,
       drawShadow: false,
       shadowBlur: 0.2
-    }
+    };
   }
 });
 

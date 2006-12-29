@@ -57,7 +57,7 @@ CanvasLab.Pie = CanvasLab.Base.extend({
         yval: points[1],
         startAngle: currentAngle * Math.PI * 2,
         endAngle: (currentAngle + fraction) * Math.PI * 2
-      }
+      };
       this.slices.push(slice);
       currentAngle += fraction;
     }.bind(this));
@@ -91,7 +91,7 @@ CanvasLab.Pie = CanvasLab.Base.extend({
       centerX: this.area.x + this.area.width * 0.5, 
       centerY: this.area.y + this.area.height * 0.5, 
       radius: Math.min(this.area.width * this.options.radius, this.area.height * this.options.radius)
-    }
+    };
   },
   
   _generateLookUpTable: function() {
@@ -114,12 +114,12 @@ CanvasLab.Pie = CanvasLab.Base.extend({
     this.stage.xTicks.each(function(xtick) {
       var slice = lookup[xtick[0]];
       
-      if(slice == undefined || slice == null) throw $continue
+      if(slice == undefined || slice == null) throw $continue;
         
       var angle = (slice.startAngle + slice.endAngle) / 2;
       var normalizedAngle = angle;
       if(angle > Math.PI * 2)
-        normalizedAngle = angle - PI * 2
+        normalizedAngle = angle - PI * 2;
       else if(angle < 0)
         normalizedAngle = angle + PI * 2;
         
@@ -133,7 +133,7 @@ CanvasLab.Pie = CanvasLab.Base.extend({
         fontSize: this.theme.fontSize + 'px',
         overflow: 'hidden',
         color: this.theme.fontColor
-      }
+      };
       
       if(normalizedAngle <= PI * 0.5) {
        labelStyle = Object.extend(labelStyle, {

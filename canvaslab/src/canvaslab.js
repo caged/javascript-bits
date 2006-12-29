@@ -36,13 +36,17 @@ CanvasLab.Base = Base.extend({
        y: this.theme.padding.top,
        width: this.canvas.width - this.theme.padding.left - this.theme.padding.right,
        height: this.canvas.height - this.theme.padding.top - this.theme.padding.bottom
-   }
+   };
    
-   Element.setStyle(this.container, {
-     position: 'relative',
-     width: this.canvas.width + 'px'
-   });
-  },
+    var border = $w('left right').collect(function(prop) {
+      return parseInt(this.canvas.getStyle('border-' + prop + '-width'));
+    }.bind(this));
+
+    Element.setStyle(this.container, {
+      position: 'relative',
+      width: this.canvas.width + border[0] + border[1] + 'px';
+    });
+   },
   
   draw: function() {
     throw 'Must be implemented in a subclass';
