@@ -49,7 +49,7 @@ CanvasLab.Base = Base.extend({
 
     Element.setStyle(this.container, {
       position: 'relative',
-      width: this.canvas.width + border[0] + border[1] + 'px';
+      width: this.canvas.width + border[0] + border[1] + 'px'
     });
    },
 
@@ -325,7 +325,7 @@ CanvasLab.Stage = Base.extend({
           this.xTicks.push([pos, xvalue]);
           tickCount++;
         }
-        if(tickCount > xCount) throw $break();
+        if(tickCount > xCount) throw {};
       }.bind(this));
 
     }
