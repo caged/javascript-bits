@@ -81,7 +81,7 @@ CanvasLab.Stage = Base.extend({
           this.xTicks.push([pos, xvalue]);
           tickCount++;
         }
-        if(tickCount > xCount) throw $break();
+        if(tickCount > xCount) return;
       }.bind(this));
       
     }
